@@ -82,6 +82,9 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(auth, provider);
   };
+  const signOut = () => {
+    auth.signOut();
+  };
 
   useEffect(() => {
     if (!user) {
@@ -97,10 +100,10 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
     });
 
     const otherUser = new Talk.User({
-      id: authSecondary.currentUser!.uid ?? "",
-      name: authSecondary.currentUser!.displayName! ?? "",
-      email: authSecondary.currentUser!.email! ?? "",
-      photoUrl: authSecondary.currentUser!.email! ?? "",
+      id: auth.currentUser!.uid ?? "",
+      name: auth.currentUser!.displayName! ?? "",
+      email: auth.currentUser!.email! ?? "",
+      photoUrl: auth.currentUser!.email! ?? "",
       role: "otherUser",
     });
 
@@ -112,6 +115,7 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
     const conversationId = Talk.oneOnOneId(currentUser, otherUser);
     const conversation = session.getOrCreateConversation(conversationId);
     conversation.setParticipant(currentUser);
+    conversation.setParticipant(otherUser);
 
     const chatbox = session.createChatbox({
       showChatHeader: false,
@@ -194,7 +198,7 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
 
   return (
     <div
-      className={`bg-[#D3DEE8] flex  w-full h-screen justify-center ${
+      className={`flex  w-full h-screen justify-center ${
         isCompleteOrder ? "pb-8" : "pb-0"
       }`}
     >
@@ -244,13 +248,16 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
               >
                 Transaction on hold
               </Button>
-              <div
+              <Button className="absolute ml-96 mt-40" onClick={signOut}>
+                Sign Out
+              </Button>
+              {/* <div
                 id="notifier-badge"
                 className="absolute ml-96 mt-40 px-8 py-4 rounded-3xl bg-[#F89602]"
               >
                 <p className="font-bold text-xs text-white">Notification</p>
                 <p>{unreadCoversations}</p>
-              </div>
+              </div> */}
               <div>{countdown}</div>
               <div className="flex flex-col">
                 <p className="text-blackmain text-xs">order no</p>

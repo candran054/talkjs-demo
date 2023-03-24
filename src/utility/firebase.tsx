@@ -20,10 +20,10 @@ const firebaseConfigSecondary = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig, "[chat-demo2]");
+const app = initializeApp(firebaseConfig, "[chat-self]");
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-const appSecondary = initializeApp(firebaseConfig, "[chat-demo3]");
+const appSecondary = initializeApp(firebaseConfigSecondary, "[chat-self2]");
 export const authSecondary = getAuth(appSecondary);
 export const dbSecondary = getFirestore(appSecondary);
