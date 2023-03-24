@@ -1,10 +1,11 @@
-import Chat from "./chat/chat";
+import TalkJs from "./chat/talkjs";
+import Chat from "./chat/talkjs";
 
 export default function Home() {
   return (
     <>
       <main>
-        <Chat presence={{ visible: true }} />
+        <TalkJs />
       </main>
     </>
   );

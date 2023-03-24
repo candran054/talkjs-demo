@@ -13,7 +13,7 @@ interface CustomChatbox extends Talk.Chatbox {
 }
 
 interface PresenceProps {
-  visible: boolean;
+  visible?: boolean;
 }
 
 interface Session {
@@ -21,7 +21,7 @@ interface Session {
   unreads: any;
 }
 
-export default function Chat({ presence }: { presence: PresenceProps }) {
+export default function TalkJs() {
   const chatboxEl = useRef<HTMLDivElement>(null);
   const userID = "tnNKfxw3";
   const conversationID = "a37529a4c152362d7972";
@@ -31,9 +31,9 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
   const [isOnHold, setIsOnHold] = useState(false);
   const [unreadCoversations, setUnreadConversations] = useState(0);
   const [user] = useAuthState(auth);
-  const [currentUserPresence] = useState(
-    presence.visible ? "online" : "offline"
-  );
+  // const [currentUserPresence] = useState(
+  //   presence && presence.visible ? "online" : "offline"
+  // );
 
   const [session, setSession] = useState<Session | null>(null);
   const [chatbox, setChatbox] = useState<Talk.Chatbox | null>(null);
@@ -123,7 +123,7 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
         visible: !isCompleteOrder,
       },
       presence: {
-        visible: presence.visible,
+        visible: true,
       },
     }) as CustomChatbox;
     chatbox.select(conversation);
@@ -135,7 +135,7 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
 
     setSession(session);
     setChatbox(chatbox);
-  }, [isCompleteOrder, user, presence.visible]);
+  }, [isCompleteOrder, user]);
 
   const handleOrderComplete = async () => {
     setIsCompleteOrder(true);
@@ -213,18 +213,18 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
                 alt={`${name} Avatar`}
                 className="rounded-3xl"
               />
-              <div
+              {/* <div
                 className={`w-3 h-3 rounded-full absolute ${
                   currentUserPresence === "online"
                     ? "bg-[#00D816]"
                     : "bg-red-600"
                 }`}
-              />
+              /> */}
             </div>
             <div className="flex w-full justify-between">
               <div className="flex flex-col mx-3">
                 <p className="text-blackmain font-semibold text-xs">{name}</p>
-                <p
+                {/* <p
                   className={`font-semibold text-xs ${
                     currentUserPresence === "online"
                       ? "text-[#00D816]"
@@ -232,7 +232,7 @@ export default function Chat({ presence }: { presence: PresenceProps }) {
                   }`}
                 >
                   {currentUserPresence}
-                </p>
+                </p> */}
               </div>
               <Button
                 className="absolute ml-96"
